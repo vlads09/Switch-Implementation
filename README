@@ -1,0 +1,32 @@
+1 2 3 (toate)
+Simion George-Vlad
+332CB
+
+                                Tema 1 - Implementare Switch
+
+        Tema consta in implementarea unui switch, task-urile fiind procesul de "forwarding
+with learning", mai exact stocarea MAC-ului sursa in tabela CAM si interfata de pe care vine, 
+implementarea VLAN-ului si al STP-ului.
+        
+        TASK 1: Codul a plecat de la implementarea pseudocodului sugerat in tema, a fost creat 
+separat o functie care verifica daca destinatia este un broadcast. Inainte de a trimite, este 
+stocata intrarea in tabela CAM, care in cadrul temei este un dictionar. Daca nu exista o 
+intrare pentru MAC-ul destinatie sau este facut broadcast, se face "flooding";
+        TASK 2: Pentru VLAN, a fost deschis fisierul de configurare al switch-ului si a fost 
+creat un nou dictionar in care se regaseste numarul interfetei si tipul portului. Implementarea 
+task-ului a necesitat modificarea codului de la TASK 1. Au fost tratate n cazuri:
+- cand pachetul vine de pe un port trunchi si se trimite mai departe pe alt port trunchi (este 
+pastrat pachetul intact);
+- cand pachetul vine de pe un port trunchi si se trimite mai departe pe un port de tip acces; 
+In acest caz, este verificata eticheta (de pe ce VLAN vine pachetul) pentru a stii daca poate 
+fi sau nu trimis pe acces pachetul. In acest caz, este eliminata eticheta si trimis mai departe;
+- cand pachetul vine de pe un port acces si se trimite pe un port tot de tip acces, sunt verificate 
+vlan-urile si daca corespund, pachetul este trimis intact;
+- cand pachetul vine de pe un port acces si se trimite pe un port tot de tip trunchi, este 
+adaugata eticheta cu vlan-ul de pe care se trimite si este trimis noul pachet.
+        TASK 3: Implementarea STP-ului a plecat de la pseudocodul precizat in tema, a fost creata 
+o functie de creare a pachetului de tip BPDU, apoi a fost completata functia de trimitere a unui 
+astfel de pachet, conform pseudocodului. Switch-ul verifica daca la primirea pachetului, MAC-ul 
+destinatie este MAC-ul specific acestui tip de pachet, apoi fiind tratat de o functie de tip 
+handle, cu pseudocodul regasit in enuntul temei. Porturile trunchi au fost stocate intr-un 
+dictionar, valoarea fiind cum este portul (asculta sau este blocat).
